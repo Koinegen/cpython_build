@@ -1,1 +1,1 @@
-from .super_secret_library import super_secret_function
+from .super_secret_library import super_secret_function, error_function

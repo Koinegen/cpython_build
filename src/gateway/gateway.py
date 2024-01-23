@@ -3,7 +3,7 @@
 from fastapi import FastAPI, status
 from pydantic import BaseModel
 
-from src.logic import super_secret_function
+from src.logic import super_secret_function, error_function
 
 app = FastAPI()
 
@@ -48,9 +48,15 @@ def get_health() -> HealthCheck:
     status_code=status.HTTP_200_OK,
     response_model=RandomResponse
 )
-def random() -> RandomResponse:
-    result = super_secret_function()
+async def random() -> RandomResponse:
+    result = await super_secret_function()
     return RandomResponse(result=result)
 
 
-
+@app.get(
+    "/error_test",
+    tags=["error_test"],
+    summary="Test raise error"
+)
+def error_test():
+    error_function()
